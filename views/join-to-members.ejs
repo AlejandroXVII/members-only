@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+	</head>
+	<body>
+		<h1><%= title %></h1>
+		<% if (currentUser) {%>
+		<h2>Please insert the secret word</h2>
+		<form action="" method="POST">
+			<label for="secretWord">Secret word: </label>
+			<input name="secretWord" placeholder="Abra kadabra" type="text" />
+			<input
+				type="hidden"
+				name="current"
+				value="<%= currentUser._id %>"
+			/>
+			<button>Save</button>
+		</form>
+		<a href="/">get back</a>
+		<% } else { %>
+		<h1>WELCOME STRANGER</h1>
+		<h2>you shall <a href="../">log in</a> first</h2>
+		<%}%>
+	</body>
+</html>

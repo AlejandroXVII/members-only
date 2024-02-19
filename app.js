@@ -4,16 +4,17 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 require("dotenv").config();
-
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const User = require("./models/user");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+const navigationRouter = require("./routes/navigation");
 
 var app = express();
 
@@ -21,14 +22,6 @@ const mongoDb = process.env.MONGODB_URL;
 mongoose.connect(mongoDb);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
-
-const User = mongoose.model(
-	"User",
-	new Schema({
-		username: { type: String, required: true },
-		password: { type: String, required: true },
-	})
-);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -55,19 +48,23 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
 	res.render("index", { user: req.user });
 });
-
+app.use("/user", navigationRouter); // Add catalog routes to middleware chain.
 app.get("/sign-up", (req, res) => res.render("sign-up-form"));
 
 app.post("/sign-up", async (req, res, next) => {
 	bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
 		// if err, do something
 		// otherwise, store hashedPassword in DB
-		if (err) {
+		if (err || req.body.password !== req.body.confirm_password) {
 			return next(err);
 		} else {
 			const user = new User({
+				first_name: req.body.first_name,
+				last_name: req.body.last_name,
 				username: req.body.username,
 				password: hashedPassword,
+				admin_status: req.body.admin_status === "on" ? true : false,
+				member_status: false,
 			});
 			const result = await user.save();
 			res.redirect("/");

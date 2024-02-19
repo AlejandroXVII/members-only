@@ -6,7 +6,12 @@
 	</head>
 	<body>
 		<% if (user) {%>
-		<h1>WELCOME BACK <%= user.username %></h1>
+		<h1>
+			WELCOME BACK <%= currentUser.first_name+" "+currentUser.last_name %>
+		</h1>
+		<a href="/user/messages">see messages</a>
+		<a href="/user/join-to-members">join to members</a>
+		<a href="/user/create-new-message">create message</a>
 		<a href="/log-out">LOG OUT</a>
 		<% } else { %>
 		<h1>please log in</h1>
