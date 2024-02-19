@@ -3,9 +3,11 @@ const { body, validationResult } = require("express-validator");
 const User = require("../models/user");
 const Message = require("../models/message");
 
-exports.user_profile = asyncHandler(async (req, res, next) => {
-	res.render("NOT IMPLEMENTED, PROFILE VIEW");
+exports.index = asyncHandler(async (req, res, next) => {
+	const messages = await Message.find({}).populate("user");
+	res.render("index", { title: "index", messages: messages });
 });
+
 exports.user_join_members_get = asyncHandler(async (req, res, next) => {
 	res.render("join-to-members", { title: "Join to members" });
 });
@@ -65,6 +67,7 @@ exports.user_create_message_post = [
 		const message = new Message({
 			text: req.body.message,
 			user: req.body.current,
+			date: new Date(),
 		});
 
 		if (!errors.isEmpty()) {

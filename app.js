@@ -44,11 +44,11 @@ app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	next();
 });
-
+/*
 app.get("/", (req, res) => {
 	res.render("index", { user: req.user });
-});
-app.use("/user", navigationRouter); // Add catalog routes to middleware chain.
+});*/
+app.use("/", navigationRouter); // Add catalog routes to middleware chain.
 app.get("/sign-up", (req, res) => res.render("sign-up-form"));
 
 app.post("/sign-up", async (req, res, next) => {

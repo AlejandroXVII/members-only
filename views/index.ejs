@@ -5,13 +5,21 @@
 		<title></title>
 	</head>
 	<body>
-		<% if (user) {%>
+		<% if (currentUser) {%>
 		<h1>
 			WELCOME BACK <%= currentUser.first_name+" "+currentUser.last_name %>
 		</h1>
-		<a href="/user/messages">see messages</a>
-		<a href="/user/join-to-members">join to members</a>
-		<a href="/user/create-new-message">create message</a>
+		<% for (let message of messages) {%>
+		<div style="border: 1px solid black; margin: 1rem; padding: 1rem">
+			<p>text: <%= message.text%></p>
+			<% if (currentUser.member_status) {%>
+			<p>user: <%= message.user.username%></p>
+			<p>date: <%= message.date%></p>
+			<% } %>
+		</div>
+		<% } %>
+		<a href="/join-to-members">join to members</a>
+		<a href="/create-new-message">create message</a>
 		<a href="/log-out">LOG OUT</a>
 		<% } else { %>
 		<h1>please log in</h1>
