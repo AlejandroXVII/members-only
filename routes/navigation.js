@@ -12,4 +12,8 @@ router.get("/create-new-message", user_controller.user_create_message_get);
 
 router.post("/create-new-message", user_controller.user_create_message_post);
 
+router.get("/:id/delate", user_controller.user_delate_message_get);
+
+router.post("/:id/delate", user_controller.user_delate_message_post);
+
 module.exports = router;

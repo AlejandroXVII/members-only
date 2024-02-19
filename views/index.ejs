@@ -15,6 +15,8 @@
 			<% if (currentUser.member_status) {%>
 			<p>user: <%= message.user.username%></p>
 			<p>date: <%= message.date%></p>
+			<% } %> <% if (currentUser.admin_status) {%>
+			<a href="<%= message.url%>/delate">delate</a>
 			<% } %>
 		</div>
 		<% } %>

@@ -82,3 +82,14 @@ exports.user_create_message_post = [
 		}
 	}),
 ];
+
+exports.user_delate_message_get = asyncHandler(async (req, res, next) => {
+	const message = await Message.findById(req.params.id).exec();
+
+	res.render("delate-message", { title: "Delate message", message: message });
+});
+
+exports.user_delate_message_post = asyncHandler(async (req, res, next) => {
+	await Message.findByIdAndDelete(req.body.messageRid);
+	res.redirect("/");
+});

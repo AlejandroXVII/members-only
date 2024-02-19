@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+	</head>
+	<body>
+		<h1><%= title %></h1>
+		<% if (currentUser.admin_status) {%>
+		<h2>Are you sure that you want to delate this message?</h2>
+		<form action="" method="POST">
+			<input
+				type="hidden"
+				name="messageRid"
+				id="messageRid"
+				value="<%= message._id %>"
+			/>
+			<button type="submit">Delate</button>
+		</form>
+		<a href="/">get back</a>
+		<% } else { %>
+		<h1>Sorry</h1>
+		<h2>You are not allow to delate this message</h2>
+		<%}%>
+	</body>
+</html>
